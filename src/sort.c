@@ -5,7 +5,7 @@
 ** Login   <slejeune@epitech.net>
 ** 
 ** Started on  Wed Nov 23 16:42:25 2016 Simon LEJEUNE
-** Last update Wed Nov 23 18:56:53 2016 Simon LEJEUNE
+** Last update Thu Nov 24 14:19:50 2016 Simon LEJEUNE
 */
 
 #include "../include/pushswap.h"
@@ -57,7 +57,7 @@ int	calc_push(t_list *list)
   return (count);
 }
 
-void	pushswap2(t_list **list1, t_list **list2, int bonus)
+void	pushswap2(t_list **list1, t_list **list2)
 {
   int	i;
   int	j;
@@ -69,22 +69,28 @@ void	pushswap2(t_list **list1, t_list **list2, int bonus)
       while (i < j)
 	{
 	  rotate(list1);
+	  my_putstr("ra ");
 	  i++;
 	}
       push(list1, list2);
-      pushswap2(list1, list2, bonus);
+      my_putstr("pb ");
+      pushswap2(list1, list2);
     }
 }
 
-void	pushswap(t_list **list1, t_list **list2, int bonus)
+void	pushswap(t_list **list1, t_list **list2)
 {
   int	i;
 
-  pushswap2(list1, list2, bonus);
+  pushswap2(list1, list2);
   i = list_size(*list2);
   while (i > 0)
     {
       push(list2, list1);
       i--;
+      if (i > 0)
+	my_putstr("pa ");
+      else
+	my_putstr("pa\n");
     }
 }

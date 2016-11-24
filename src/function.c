@@ -5,7 +5,7 @@
 ** Login   <slejeune@epitech.net>
 ** 
 ** Started on  Mon Nov 21 10:07:27 2016 Simon LEJEUNE
-** Last update Wed Nov 23 16:41:02 2016 Simon LEJEUNE
+** Last update Thu Nov 24 14:14:54 2016 Simon LEJEUNE
 */
 
 #include <unistd.h>
@@ -28,21 +28,28 @@ void	my_putstr(char *str)
     }
 }
 
-void	my_put_nbr(int nb)
+int	my_put_nbr(int nb)
 {
-  if (nb < 0)
-    {
-      my_putchar('-');
-      nb = nb * -1;
-    }
-  if (nb <= 9)
-    my_putchar (nb + '0');
+  int	d;
+
+  d = 1;
+  if (nb == -2147483648)
+    my_putstr("-2147483648");
   else
     {
-      my_put_nbr(nb / 10);
-      my_put_nbr(nb % 10);
+      if (nb < 0)
+	{
+	  my_putchar('-');
+	  nb *= -1;
+	}
+      while ((nb / d >= 10))
+	d *= 10;
+      while (d > 0)
+	{
+	  my_putchar((nb / d) % 10 + '0');
+	  d/= 10;
+	}
     }
-  return (nb);
 }
 
 int	my_isnum(char *str)
@@ -50,17 +57,17 @@ int	my_isnum(char *str)
   int	res;
   int	sign;
   int	i;
-
+  
   res = 0;
   sign = 0;
   i = 0;
-  ((*str == '-') ? (sign = 1, i++) : (0));
-  while (*str != '\0')
+  ((str[i] == '-') ? (sign = 1, i++) : (0));
+  while (str[i] != '\0')
     {
-      if (*str >= '0' && *str <= '9')
+      if (str[i] >= '0' && str[i] <= '9')
 	{
 	  res *= 10;
-	  res += *str - '0';
+	  res += str[i] - '0';
 	}
       else
 	return (res);
